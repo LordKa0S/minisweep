@@ -26,6 +26,7 @@ SET(SOURCES
   src/3_sweeper/sweeper.c
   src/3_sweeper/sweeper_kernels.c
   src/4_driver/runner.c
+  src/pmpi.c
   )
 
 SET(CUDA_SOURCES)
