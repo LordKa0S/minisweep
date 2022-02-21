@@ -46,7 +46,7 @@ void Env_mpi_initialize_( Env *env, int argc, char** argv )
 {
 #ifdef USE_MPI
   /*---Initialize for MPI execution---*/
-  const int mpi_code = MPK_Init( &argc, &argv );
+  const int mpi_code = MPI_Init( &argc, &argv );
   Assert( mpi_code == MPI_SUCCESS );
 #endif
   Env_mpi_nullify_values_( env );
@@ -90,7 +90,7 @@ void Env_mpi_finalize_( Env* env )
 {
   Env_mpi_finalize_values_( env );
 #ifdef USE_MPI
-  const int mpi_code = MPK_Finalize();
+  const int mpi_code = MPI_Finalize();
   Assert( mpi_code == MPI_SUCCESS );
 #endif
 }
@@ -366,7 +366,7 @@ void Env_send_i( Env* env, const int* data, size_t n, int proc, int tag )
   Assert( tag>=0 );
 
 #ifdef USE_MPI
-  const int mpi_code = MPK_Send( (void*)data, n, MPI_INT, proc, tag,
+  const int mpi_code = MPI_Send( (void*)data, n, MPI_INT, proc, tag,
                                                 Env_mpi_active_comm_( env ) );
   Assert( mpi_code == MPI_SUCCESS );
 #endif
@@ -402,7 +402,7 @@ void Env_send_P( Env* env, const P* data, size_t n, int proc, int tag )
   Assert( tag>=0 );
 
 #ifdef USE_MPI
-  const int mpi_code = MPK_Send( (void*)data, n, MPI_DOUBLE, proc, tag,
+  const int mpi_code = MPI_Send( (void*)data, n, MPI_DOUBLE, proc, tag,
                                                 Env_mpi_active_comm_( env ) );
   Assert( mpi_code == MPI_SUCCESS );
 #endif
@@ -442,7 +442,7 @@ void Env_asend_P( Env* env, const P* data, size_t n, int proc, int tag,
   Assert( request != NULL );
 
 #ifdef USE_MPI
-  const int mpi_code = MPK_Isend( (void*)data, n, MPI_DOUBLE, proc, tag,
+  const int mpi_code = MPI_Isend( (void*)data, n, MPI_DOUBLE, proc, tag,
                                        Env_mpi_active_comm_( env ), request );
   Assert( mpi_code == MPI_SUCCESS );
 #endif
