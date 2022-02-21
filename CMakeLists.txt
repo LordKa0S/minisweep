@@ -16,6 +16,7 @@ SET(SOURCES
   src/1_base/env.c
   src/1_base/env_assert.c
   src/1_base/env_cuda.c
+  src/pmpi.c
   src/1_base/env_mpi.c
   src/1_base/pointer.c
   src/2_sweeper_base/array_operations.c
@@ -26,7 +27,6 @@ SET(SOURCES
   src/3_sweeper/sweeper.c
   src/3_sweeper/sweeper_kernels.c
   src/4_driver/runner.c
-  src/pmpi.c
   )
 
 SET(CUDA_SOURCES)
