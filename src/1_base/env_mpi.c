@@ -12,7 +12,7 @@
 
 #ifdef USE_MPI
 #include "mpi.h"
-include "pmpi.c"
+#include "pmpi.c"
 #endif
 
 #include "types.h"
