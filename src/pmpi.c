@@ -1,5 +1,6 @@
 #include "mpi.h"
 #include "stdio.h"
+#include "stdlib.h"
 
 /* This is the root process */
 #define ROOT 0
@@ -43,10 +44,12 @@ int MPI_Finalize(void)
     if (rank == ROOT)
     {
         FILE *fp = fopen("matrix.data", "w");
-        for (int proc = 0; proc < numproc; proc++)
+        int proc;
+        for (proc = 0; proc < numproc; proc++)
         {
             fprintf(fp, "%d ", proc);
-            for (int dest = 0; dest < numproc; dest++)
+            int dest;
+            for (dest = 0; dest < numproc; dest++)
             {
                 fprintf(fp, "%d ", *(matrix + proc + dest));
             }
