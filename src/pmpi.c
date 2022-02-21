@@ -1,4 +1,5 @@
 #include "mpi.h"
+#include "stdio.h"
 
 /* This is the root process */
 #define ROOT 0
@@ -6,7 +7,7 @@
 /* process information */
 int numproc, rank;
 int *sends;
-int *matrix;
+int *matrix = NULL;
 
 int MPI_Init(int *argc, char ***argv)
 {
@@ -17,7 +18,6 @@ int MPI_Init(int *argc, char ***argv)
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     if (rank == ROOT)
     {
-        printf("Yaay");
         matrix = malloc(numproc * numproc * sizeof(int));
     }
     sends = (int *)malloc(numproc * sizeof(int));
@@ -40,5 +40,19 @@ int MPI_Isend(const void *buf, int count, MPI_Datatype datatype, int dest, int t
 int MPI_Finalize(void)
 {
     MPI_Gather(sends, numproc, MPI_INTEGER, matrix, numproc, MPI_INTEGER, ROOT, MPI_COMM_WORLD);
+    if (rank == ROOT)
+    {
+        FILE *fp = fopen("matrix.data", "w");
+        for (int proc = 0; proc < numproc; proc++)
+        {
+            fprintf(fp, "%d ", proc);
+            for (int dest = 0; dest < numproc; dest++)
+            {
+                fprintf(fp, "%d ", *(matrix + proc + dest));
+            }
+            fprintf(fp, "\n");
+        }
+        fclose(fp);
+    }
     return PMPI_Finalize();
 }
